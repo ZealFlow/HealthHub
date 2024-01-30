@@ -1,6 +1,5 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import { User } from "../app/Models/User";
 
 export const AppDataSource = new DataSource({
     type: 'mysql',
@@ -8,14 +7,9 @@ export const AppDataSource = new DataSource({
     port: 3306,
     username: 'root',
     password: 'Tin18082002',
-    database: 'example',
+    database: 'db_healsync',
     synchronize: true,
     logging: true,
-    entities: [User],
-    subscribers: [],
-    migrations: [],
+    entities: ["src/app/Models/**/*.ts"],
+    migrations: ["src/database/migrations/*.ts"],
 });
-
-AppDataSource.initialize()
-    .then()
-    .catch((error) => console.log(error))
