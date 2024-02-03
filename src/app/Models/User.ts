@@ -1,15 +1,16 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from 'typeorm';
 
 @Entity()
-class User extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    id: number | undefined;
+export class User extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id!: number;
 
-    @Column({ type: "varchar", length: 200 })
-    username: string | undefined;
+  @Column()
+  firstName!: string;
 
-    @Column({ type: "varchar", length: 200 })
-    email: string | undefined;
+  @Column()
+  lastName!: string;
+
+  @Column()
+  age!: number;
 }
-
-export { User };

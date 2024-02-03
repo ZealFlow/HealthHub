@@ -1,7 +1,7 @@
 import route from "./routes";
 import express from "express";
 import dotenv from "dotenv";
-import { AppDataSource } from "./config/data-source";
+import { AppDataSource } from "./config/dataSource";
 
 dotenv.config();
 
