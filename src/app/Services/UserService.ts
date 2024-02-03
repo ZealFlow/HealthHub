@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { inject, injectable } from "inversify";
-import { User } from "../Models/User";
+import { User } from "../Models/UserProfile";
 import { UserRepositoryInterface } from "../Repositories/Interfaces/UserRepositoryInterface";
 import { UserServiceInterface } from "./Interfaces/UserServiceInterface";
 import { TYPES } from "../../config/types";
