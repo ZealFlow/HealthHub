@@ -1,4 +1,4 @@
-import { User } from "../../Models/User";
+import { User } from "../../Models/UserProfile";
 import { RepositoryInterface } from "./RepositoryInterface";
 
 interface UserRepositoryInterface extends RepositoryInterface {

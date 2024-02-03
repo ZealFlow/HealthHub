@@ -1,4 +1,4 @@
-import { User } from "../../Models/User";
+import { User } from "../../Models/UserProfile";
 
 interface UserServiceInterface {
     getAll(): Promise<User[]>;
