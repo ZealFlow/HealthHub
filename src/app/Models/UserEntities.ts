@@ -9,10 +9,10 @@ export class UserEntities extends BaseEntity{
     @Column("json")
     enity_user!: JSON;
 
-    @Column("timestamp")
+    @Column({type: "timestamp", default: () => 'NOW()'})
     create_at!: Timestamp;
 
-    @Column("timestamp")
+    @Column({type: "timestamp", default: () => 'NOW()'})
     update_at!: Timestamp;
 
     @Column("int")

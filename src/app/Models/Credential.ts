@@ -27,7 +27,7 @@ export class Credential extends BaseEntity {
     @Column("timestamp")
     recovery_token_time!: Timestamp;
 
-    @Column("timestamp")
+    @Column({type: "timestamp", default: () => 'NOW()'})
     last_updated!: Timestamp;
 
     @OneToOne(() => UserProfile, (userProfile: UserProfile) => userProfile.user_id)

@@ -5,6 +5,7 @@ import { UserProfileService } from "../Services/UserProfileService";
 import { UserProfileRepository } from "../Repositories/UserProfileRepository";
 import { UserProfileRepositoryInterface } from "../Repositories/Interfaces/UserProfileRepositoryInterface";
 import { UserProfileServiceInterface } from "../Services/Interfaces/UserProfileServiceInterface";
+import { UserProfile } from "../Models/UserProfile";
 
 class AppServiceProvider {
     private container: Container;
@@ -17,6 +18,7 @@ class AppServiceProvider {
     public register() {
         this.container.bind<UserProfileServiceInterface>(TYPES.UserServiceInterface).to(UserProfileService);
         this.container.bind<UserProfileRepositoryInterface>(TYPES.UserRepositoryInterface).to(UserProfileRepository);
+        this.container.bind(TYPES.UserProfile).toConstantValue(new UserProfile());
     }
 
     public getContainer(): Container {
