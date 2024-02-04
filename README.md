@@ -9,3 +9,5 @@ HealthHub
 
 `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass`
 `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Default`
+
+`npm i --save-dev @types/bcrypt`
