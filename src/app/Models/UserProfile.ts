@@ -17,12 +17,12 @@ export class UserProfile extends BaseEntity {
   @Column("varchar", { length: 50 })
   username!: string;
 
-  @Column("timestamp")
+  @Column({type: "timestamp", default: () => 'NOW()'})
   create_at!: Timestamp;
 
-  @Column("timestamp")
+  @Column({type: "timestamp", default: () => 'NOW()'})
   update_at!: Timestamp;
 
-  @Column("bit")
+  @Column({type: "bit", default: true})
   is_active!: boolean;
 };

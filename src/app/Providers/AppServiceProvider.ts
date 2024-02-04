@@ -1,10 +1,11 @@
 import "reflect-metadata";
 import { Container } from "inversify";
 import { TYPES } from "../../config/types";
-import { UserService } from "../Services/UserService";
-import { UserRepository } from "../Repositories/UserRepository";
-import { UserRepositoryInterface } from "../Repositories/Interfaces/UserRepositoryInterface";
-import { UserServiceInterface } from "../Services/Interfaces/UserServiceInterface";
+import { UserProfileService } from "../Services/UserProfileService";
+import { UserProfileRepository } from "../Repositories/UserProfileRepository";
+import { UserProfileRepositoryInterface } from "../Repositories/Interfaces/UserProfileRepositoryInterface";
+import { UserProfileServiceInterface } from "../Services/Interfaces/UserProfileServiceInterface";
+import { UserProfile } from "../Models/UserProfile";
 
 class AppServiceProvider {
     private container: Container;
@@ -15,8 +16,9 @@ class AppServiceProvider {
     }
 
     public register() {
-        this.container.bind<UserServiceInterface>(TYPES.UserServiceInterface).to(UserService);
-        this.container.bind<UserRepositoryInterface>(TYPES.UserRepositoryInterface).to(UserRepository);
+        this.container.bind<UserProfileServiceInterface>(TYPES.UserServiceInterface).to(UserProfileService);
+        this.container.bind<UserProfileRepositoryInterface>(TYPES.UserRepositoryInterface).to(UserProfileRepository);
+        this.container.bind(TYPES.UserProfile).toConstantValue(new UserProfile());
     }
 
     public getContainer(): Container {
