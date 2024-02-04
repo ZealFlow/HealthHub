@@ -1,14 +1,19 @@
 import route from "./routes";
 import express from "express";
 import dotenv from "dotenv";
-import { AppDataSource } from "./config/dataSource";
+import { dataSource } from "./config/dataSource";
+import bodyParser from 'body-parser';
 
 dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
 
-AppDataSource
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+dataSource
   .initialize()
   .then(() => {
       console.log("Data Source has been initialized!")
