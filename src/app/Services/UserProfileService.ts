@@ -13,8 +13,8 @@ class UserProfileService implements UserProfileServiceInterface {
         this.userProfileRepositoryInterface = userProfileRepositoryInterface;
     }
 
-    saveUserProfile(data: UserProfile): Promise<void> {
-        return this.userProfileRepositoryInterface.saveUserProfile(data)
+    save(data: UserProfile): Promise<UserProfile> {
+        return this.userProfileRepositoryInterface.save(data);
     }
     
     getAll(): Promise<UserProfile[]> {

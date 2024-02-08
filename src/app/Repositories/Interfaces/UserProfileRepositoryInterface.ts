@@ -3,7 +3,7 @@ import { RepositoryInterface } from "./RepositoryInterface";
 
 interface UserProfileRepositoryInterface extends RepositoryInterface {
     getUsers(): Promise<UserProfile[]>;
-    saveUserProfile(data: UserProfile): Promise<void>;
+    save(data: UserProfile): Promise<any>;
 };
 
 export type { UserProfileRepositoryInterface };

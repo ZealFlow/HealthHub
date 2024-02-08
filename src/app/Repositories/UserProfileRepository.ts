@@ -5,7 +5,6 @@ import { injectable } from "inversify";
 
 @injectable()
 class UserProfileRepository extends BaseRepository implements UserProfileRepositoryInterface {
-    
     getModel() { 
         return UserProfile;  
     }
@@ -14,8 +13,8 @@ class UserProfileRepository extends BaseRepository implements UserProfileReposit
         return await UserProfile.find();
     }
     
-    async saveUserProfile(data: UserProfile): Promise<void> {
-        UserProfile.save(data);
+    async save(data: UserProfile): Promise<UserProfile> {
+        return await UserProfile.save(data);
     }
 }
 

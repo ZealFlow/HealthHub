@@ -1,41 +1,44 @@
-import { UserProfile } from './../../../Models/UserProfile';
 import 'reflect-metadata';
+import { Credential } from './../../../Models/Credential';
+import { UserProfile } from './../../../Models/UserProfile';
 import { injectable, inject } from 'inversify';
 import { Request, Response, request, response } from "express";
-import { TYPES }  from "../../../../config/types";
+import { TYPES } from "../../../../config/types";
 import { UserProfileServiceInterface } from '../../../Services/Interfaces/UserProfileServiceInterface';
-import { Validator } from '../../../Validations/Validator';
-import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import { CredentialServiceInterface } from '../../../Services/Interfaces/CredentialServiceInterface';
 
 @injectable()
-class RegisterController { 
+class RegisterController {
     protected userProfileServiceInterface: UserProfileServiceInterface;
-    protected userProfile: UserProfile;
+    protected credentialServiceInterface: CredentialServiceInterface;
 
-    constructor(@inject(TYPES.UserServiceInterface) userProfileServiceInterface: UserProfileServiceInterface,
-    @inject(TYPES.UserProfile) userProfile: UserProfile) {
+    constructor(
+        @inject(TYPES.UserServiceInterface) userProfileServiceInterface: UserProfileServiceInterface,
+        @inject(TYPES.CredentialServiceInterface) credentialServiceInterface: CredentialServiceInterface,
+    ) {
         this.userProfileServiceInterface = userProfileServiceInterface;
-        this.userProfile = userProfile;
+        this.credentialServiceInterface = credentialServiceInterface;
     }
 
-    async index (req: Request, res: Response) {
-        // const validations = new Validator(req.body);
-        // const { error } = validations.register();
-        // if (error) return response.status(422).send(error.details[0].message);
-        const checkEmailExist = await UserProfile.findOne({ where: { email: req.body.email } });
+    async index(req: Request, res: Response) {
+        const { userProfileData, credentialData } = req.body;
+        const userProfile = new UserProfile();
+        const credential = new Credential();
 
-        const salt = await bcrypt.genSalt(10);
-        const hashPassword = await bcrypt.hash(req.body.password, salt);
+        //encode password
+        const saltPassword = await bcrypt.genSalt(10);
+        const hashPassword = await bcrypt.hash(credentialData.password, saltPassword);
 
-        this.userProfile.firstname = req.body.firstname;
-        this.userProfile.lastname = req.body.lastname;
-        this.userProfile.email = req.body.email;
-        this.userProfile.username = req.body.username;
+        Object.assign(userProfile, userProfileData);
+        Object.assign(credential, {...credentialData, password_hash: hashPassword, password_salt: saltPassword});
+    
+    
+        userProfile.credential = credential;
 
-        this.userProfileServiceInterface.saveUserProfile(this.userProfile);
-
-        return res.send({hashPassword, salt, checkEmailExist});
+        await this.userProfileServiceInterface.save(userProfile);
+        
+        res.json({ message: 'User profile and credential saved successfully' });
     }
 }
 
