@@ -11,6 +11,7 @@ import { CredentialRepositoryInterface } from '../Repositories/Interfaces/Creden
 import { CredentialRepository } from '../Repositories/CredentialRepository';
 import { CredentialService } from '../Services/CredentialService';
 import { CredentialServiceInterface } from '../Services/Interfaces/CredentialServiceInterface';
+import { Verification } from '../Http/Middleware/Verification';
 
 class AppServiceProvider {
     private container: Container;

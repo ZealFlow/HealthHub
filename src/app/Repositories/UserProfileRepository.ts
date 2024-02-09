@@ -18,7 +18,7 @@ class UserProfileRepository extends BaseRepository implements UserProfileReposit
     }
 
     async findOne(option: any): Promise<UserProfile | null> {
-        return await UserProfile.findOne({ where: option });
+        return await this.getModel().findOne({ where: option });
     }
 }
 

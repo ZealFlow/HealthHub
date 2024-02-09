@@ -9,16 +9,16 @@ import { CredentialServiceInterface } from "./Interfaces/CredentialServiceInterf
 class CredentialService implements CredentialServiceInterface {
     protected credentialRepositoryInterface: CredentialRepositoryInterface;
 
-    constructor (@inject(TYPES.UserRepositoryInterface) credentialRepositoryInterface: CredentialRepositoryInterface) {
+    constructor (@inject(TYPES.CredentialRepositoryInterface) credentialRepositoryInterface: CredentialRepositoryInterface) {
         this.credentialRepositoryInterface = credentialRepositoryInterface;
+    }
+    
+    findOne(option: any): Promise<Credential | null> {
+        return this.credentialRepositoryInterface.findOne(option);
     }
 
     save(data: Credential): Promise<Credential> {
         return this.credentialRepositoryInterface.save(data)
-    }
-
-    create(data: Credential): Promise<Credential> {
-        return this.credentialRepositoryInterface.create(data);
     }
 };
 

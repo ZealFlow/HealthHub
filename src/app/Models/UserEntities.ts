@@ -1,5 +1,4 @@
 import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Timestamp } from "typeorm";
-import { UserProfile } from "./UserProfile";
 
 @Entity()
 export class UserEntities extends BaseEntity {

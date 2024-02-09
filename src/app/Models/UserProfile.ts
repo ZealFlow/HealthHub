@@ -1,6 +1,5 @@
 import { Credential } from './Credential';
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Timestamp, AfterInsert, OneToOne, JoinColumn } from 'typeorm';
-import { UserEntities } from './UserEntities';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Timestamp, OneToOne, JoinColumn } from 'typeorm';
 
 @Entity()
 export class UserProfile extends BaseEntity {

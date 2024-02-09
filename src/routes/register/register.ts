@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { RegisterController } from "../../app/Http/Controllers/Auth/RegisterController";
 import AppServiceProvider from "../../app/Providers/AppServiceProvider";
+import { Authentication } from "../../app/Http/Middleware/Authentication";
 
 class RegisterRoutes {
     private registerController: RegisterController;

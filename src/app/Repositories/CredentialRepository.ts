@@ -13,8 +13,9 @@ class CredentialRepository extends BaseRepository implements CredentialRepositor
         return await Credential.save(data);
     }
 
-    async create(data: Credential): Promise<Credential> {
-        return Credential.create(data);
+    async findOne(option: any): Promise<Credential | null> {
+        console.log(this.getModel());
+        return await this.getModel().findOne({ where: option });
     }
 }
 

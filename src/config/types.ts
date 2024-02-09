@@ -10,6 +10,8 @@ const TYPES = {
     CredentialService: Symbol.for("CredentialService"),
     CredentialRepository: Symbol.for("CredentialRepository"),
     Credential: Symbol.for("Credential"),
+
+    Verification: Symbol.for("Verification"),
 };
 
 export { TYPES };

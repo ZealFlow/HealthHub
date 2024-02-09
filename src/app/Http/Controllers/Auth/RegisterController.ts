@@ -24,34 +24,39 @@ const encodedToken = (user_id: number) => {
 class RegisterController {
     protected userProfileServiceInterface: UserProfileServiceInterface;
     protected credentialServiceInterface: CredentialServiceInterface;
+    protected userProfileModel: UserProfile;
+    protected credentialModel: Credential;
 
     constructor(
         @inject(TYPES.UserServiceInterface) userProfileServiceInterface: UserProfileServiceInterface,
         @inject(TYPES.CredentialServiceInterface) credentialServiceInterface: CredentialServiceInterface,
+        @inject(TYPES.UserProfile) userProfileModel: UserProfile,
+        @inject(TYPES.Credential) credentialModel: Credential
     ) {
         this.userProfileServiceInterface = userProfileServiceInterface;
         this.credentialServiceInterface = credentialServiceInterface;
+        this.userProfileModel = userProfileModel;
+        this.credentialModel = credentialModel;
     }
 
     async index(req: Request, res: Response) {
         const { userProfileData, credentialData } = req.body;
-        const userProfile = new UserProfile();
-        const credential = new Credential();
 
         //hash password
         const saltPassword = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(credentialData.password, saltPassword);
 
-        Object.assign(userProfile, userProfileData);
-        Object.assign(credential, { ...credentialData, password_hash: hashPassword, password_salt: saltPassword });
+        Object.assign(this.userProfileModel, userProfileData);
+        Object.assign(this.credentialModel, { ...credentialData, password_hash: hashPassword, password_salt: saltPassword });
 
 
-        userProfile.credential = credential;
+        this.userProfileModel.credential = this.credentialModel;
 
-        await this.userProfileServiceInterface.save(userProfile);
+        //save userProfile with credential
+        await this.userProfileServiceInterface.save(this.userProfileModel);
 
         //get token
-        res.setHeader('Authorization', encodedToken(userProfile.user_id));
+        res.setHeader('Authorization', encodedToken(this.userProfileModel.user_id));
 
         res.json({ message: 'User profile and credential saved successfully'});
     }

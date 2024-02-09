@@ -16,6 +16,7 @@ class LoginController {
     }
 
     async index(req: Request, res: Response) {
+        res.send('User login Successfully!');
     }
 }
 
