@@ -15,9 +15,17 @@ abstract class BaseRepository implements RepositoryInterface {
         return await this.model.find();
     }
 
-    async saveUserProfile(data: any): Promise<any> {
+    async save(data: any): Promise<any> {
         return await this.model.save(data);
     } 
+
+    async create(data: any): Promise<any> {
+        return await this.model.create();
+    }
+
+    async findOne(option: any): Promise<any> {
+        return await this.model.findOne({ where: { option } })!;
+    }
 };
 
 export { BaseRepository };

@@ -2,7 +2,8 @@ import { UserProfile } from "../../Models/UserProfile";
 
 interface UserProfileServiceInterface {
     getAll(): Promise<UserProfile[]>;
-    saveUserProfile(data: UserProfile): Promise<void>;
+    save(data: UserProfile): Promise<UserProfile>;
+    findOne(option: any): Promise<UserProfile | null>;
 };
 
 export type { UserProfileServiceInterface };

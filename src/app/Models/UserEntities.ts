@@ -2,26 +2,23 @@ import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColum
 import { UserProfile } from "./UserProfile";
 
 @Entity()
-export class UserEntities extends BaseEntity{
+export class UserEntities extends BaseEntity {
     @PrimaryGeneratedColumn({ type: "int" })
     entity_id!: number;
 
     @Column("json")
     enity_user!: JSON;
 
-    @Column({type: "timestamp", default: () => 'NOW()'})
+    @Column({ type: "timestamp", default: () => 'NOW()' })
     create_at!: Timestamp;
 
-    @Column({type: "timestamp", default: () => 'NOW()'})
+    @Column({ type: "timestamp", default: () => 'NOW()' })
     update_at!: Timestamp;
 
-    @Column("int")
-    website_id!: number;
-
-    @Column("bit")
+    @Column("bit") 
     is_active!: boolean;
 
-    @OneToOne(() => UserProfile, (userProfile: UserProfile) => userProfile.user_id)
-    @JoinColumn()
-    userProfile!: UserProfile;
+    // @OneToOne(() => UserProfile, (userProfile: UserProfile) => userProfile.user_id, { onDelete: "CASCADE", cascade: ['insert', 'update'] })
+    // @JoinColumn()
+    // userProfile!: UserProfile;
 };

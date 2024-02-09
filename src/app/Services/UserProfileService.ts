@@ -12,9 +12,13 @@ class UserProfileService implements UserProfileServiceInterface {
     constructor (@inject(TYPES.UserRepositoryInterface) userProfileRepositoryInterface: UserProfileRepositoryInterface) {
         this.userProfileRepositoryInterface = userProfileRepositoryInterface;
     }
+    
+    findOne(option: any): Promise<UserProfile | null> {
+        return this.userProfileRepositoryInterface.findOne(option);
+    }
 
-    saveUserProfile(data: UserProfile): Promise<void> {
-        return this.userProfileRepositoryInterface.saveUserProfile(data)
+    save(data: UserProfile): Promise<UserProfile> {
+        return this.userProfileRepositoryInterface.save(data);
     }
     
     getAll(): Promise<UserProfile[]> {

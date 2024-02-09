@@ -7,7 +7,7 @@ export const dataSource = new DataSource({
     port: 3306,
     username: "root",
     password: "Tin18082002",
-    database: "db_healthhub",
+    database: "healthhub",
     synchronize: true,
     logging: true,
     entities: ["./src/app/Models/**/*.ts"],
