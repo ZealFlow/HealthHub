@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { RegisterController } from "../../app/Http/Controllers/Auth/RegisterController";
-import AppServiceProvider from "../../app/Providers/AppServiceProvider";
-import { Authentication } from "../../app/Http/Middleware/Authentication";
+import { RegisterController } from "../../../../app/Http/Controllers/Auth/RegisterController";
+import AppServiceProvider from "../../../../app/Providers/AppServiceProvider";
+import { Authentication } from "../../../../app/Http/Middleware/Authentication";
 
 class RegisterRoutes {
     private registerController: RegisterController;
@@ -13,7 +13,7 @@ class RegisterRoutes {
     }
 
     intializeRoutes() { 
-        this.router.post("/", this.registerController.index.bind(this.registerController));
+        this.router.post("/register", this.registerController.index.bind(this.registerController));
     }
 }
 

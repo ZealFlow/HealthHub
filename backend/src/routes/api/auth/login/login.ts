@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { LoginController } from "../../app/Http/Controllers/Auth/LoginController";
-import AppServiceProvider from "../../app/Providers/AppServiceProvider";
+import { LoginController } from "../../../../app/Http/Controllers/Auth/LoginController";
+import AppServiceProvider from "../../../../app/Providers/AppServiceProvider";
 import passport, { session } from "passport";
-import { Authentication } from "../../app/Http/Middleware/Authentication";
+import { Authentication } from "../../../../app/Http/Middleware/Authentication";
 require('dotenv').config();
 
 class LoginRoutes {
@@ -17,8 +17,8 @@ class LoginRoutes {
     }
 
     intializeRoutes() {
-        this.router.get("/", passport.authenticate('jwt', { session: false }), this.loginController.index.bind(this.loginController));
-        this.router.post("/", passport.authenticate('local', { session: false }), this.loginController.index.bind(this.loginController));
+        this.router.get("/login", passport.authenticate('jwt', { session: false }), this.loginController.index.bind(this.loginController));
+        this.router.post("/login", passport.authenticate('local', { session: false }), this.loginController.index.bind(this.loginController));
     }
 }
 

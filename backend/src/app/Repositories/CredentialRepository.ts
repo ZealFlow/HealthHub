@@ -14,7 +14,6 @@ class CredentialRepository extends BaseRepository implements CredentialRepositor
     }
 
     async findOne(option: any): Promise<Credential | null> {
-        console.log(this.getModel());
         return await this.getModel().findOne({ where: option });
     }
 }
