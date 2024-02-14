@@ -6,7 +6,7 @@ export class Admin extends BaseEntity {
     @PrimaryGeneratedColumn()
     admin_id!: number;
 
-    @OneToOne(() => UserProfile, (userProfile: UserProfile) => userProfile.user_id)
-    @JoinColumn()
+    @OneToOne(() => UserProfile, userProfile => userProfile.admin, { cascade: true })
+    @JoinColumn() 
     userProfile!: UserProfile;
 };

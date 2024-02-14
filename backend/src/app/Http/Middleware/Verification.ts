@@ -23,7 +23,7 @@ export class Verification {
         const userProfile = await this.userProfileServiceInterface.findOne({ username: username });
         if (!userProfile) return false;
 
-        const credential = await this.credentialServiceInterface.findOne({ password_id: 10 });
+        const credential = await this.credentialServiceInterface.findOne({ password_id: userProfile.user_id });
         if (!credential) return false;
 
         return await bcrypt.compare(password, credential.password_hash);

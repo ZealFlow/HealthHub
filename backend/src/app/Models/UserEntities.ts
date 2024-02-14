@@ -1,4 +1,5 @@
 import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Timestamp } from "typeorm";
+import { UserProfile } from "./UserProfile";
 
 @Entity()
 export class UserEntities extends BaseEntity {
@@ -17,7 +18,7 @@ export class UserEntities extends BaseEntity {
     @Column("bit") 
     is_active!: boolean;
 
-    // @OneToOne(() => UserProfile, (userProfile: UserProfile) => userProfile.user_id, { onDelete: "CASCADE", cascade: ['insert', 'update'] })
-    // @JoinColumn()
-    // userProfile!: UserProfile;
+    @OneToOne(() => UserProfile, userProfile => userProfile.userEntities, { cascade: true })
+    @JoinColumn() 
+    userProfile!: UserProfile;
 };

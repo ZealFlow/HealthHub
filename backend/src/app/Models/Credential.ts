@@ -17,4 +17,4 @@ export class Credential extends BaseEntity {
 
     @OneToOne(() => UserProfile, userProfile => userProfile.credential)
     userProfile!: UserProfile;
-}
+};

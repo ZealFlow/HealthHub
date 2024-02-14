@@ -17,7 +17,7 @@ export default function FormRegister() {
                 firstname,
                 lastname,
                 username,
-                email: identification // Assuming identification field contains email
+                email: identification
             },
             credentialData: {
                 password
@@ -33,18 +33,18 @@ export default function FormRegister() {
             },
             body: JSON.stringify(formData)
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     }
     
     
