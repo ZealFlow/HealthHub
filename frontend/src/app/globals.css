@@ -31,3 +31,23 @@
     text-wrap: balance;
   }
 } */
+
+
+:root {
+  --bgr-global-color: #001c38;
+}
+
+.headerPage__user {
+  background-color: var(--bgr-global-color);
+  height: 84px;
+}
+
+.awesome-icon {
+  height: 24px;
+  width: 24px
+}
+
+.selectOption {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgb(255, 255, 255);
+}

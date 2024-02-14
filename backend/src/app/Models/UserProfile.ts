@@ -2,7 +2,6 @@ import { Credential } from './Credential';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Timestamp, OneToOne, JoinColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { UserEntities } from './UserEntities';
 import { Admin } from './Admin';
-import { Role } from './Role';
 import { EntitiesRole } from './EntitiesRole';
 
 @Entity()
