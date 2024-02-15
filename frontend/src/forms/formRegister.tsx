@@ -1,6 +1,8 @@
 'use client';
+import { useRouter } from 'next/navigation';
 
 export default function FormRegister() {
+    const router = useRouter();
 
     function handleSubmit() {
         // Get the values from the form fields
@@ -34,13 +36,9 @@ export default function FormRegister() {
             body: JSON.stringify(formData)
         })
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                if (response.ok) {
+                    router.push('/');
                 }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Success:', data);
             })
             .catch(error => {
                 console.error('Error:', error);

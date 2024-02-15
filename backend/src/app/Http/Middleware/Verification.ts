@@ -3,8 +3,6 @@ import { TYPES } from '../../../config/types';
 import { CredentialServiceInterface } from '../../Services/Interfaces/CredentialServiceInterface';
 import { inject, injectable } from 'inversify';
 import bcrypt from 'bcrypt';
-import { CredentialService } from '../../Services/CredentialService';
-import { Credential } from '../../Models/Credential';
 
 @injectable()
 export class Verification {

@@ -1,8 +1,8 @@
-import { Credential } from './../../Models/Credential';
+import { UserCredential } from '../../Models/UserCredential';
 
 interface CredentialServiceInterface {
-    save(data: Credential): Promise<Credential>;
-    findOne(option: any): Promise<Credential | null>;
+    save(data: UserCredential): Promise<UserCredential>;
+    findOne(option: any): Promise<UserCredential | null>;
 };
 
 export type { CredentialServiceInterface };

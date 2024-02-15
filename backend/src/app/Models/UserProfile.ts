@@ -1,4 +1,3 @@
-import { Credential } from './Credential';
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Timestamp, OneToOne, JoinColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
 import { UserEntities } from './UserEntities';
 import { Admin } from './Admin';
@@ -30,14 +29,10 @@ export class UserProfile extends BaseEntity {
     @Column({ type: "bit", default: true })
     is_active!: boolean;
 
-    @OneToOne(() => Credential, credential => credential.userProfile, { cascade: true })
-    @JoinColumn() 
-    credential!: Credential;
-
     @OneToOne(() => Admin, admin => admin.userProfile)
     admin!: Admin;
 
-    @OneToOne(() => UserEntities, userEntities => userEntities.userProfile)
+    @OneToOne(() => UserEntities, userEntities => userEntities.userProfile, { cascade: true })
     userEntities!: UserEntities;
 
     @OneToMany(() => EntitiesRole, entitiesRole => entitiesRole.userProfile)

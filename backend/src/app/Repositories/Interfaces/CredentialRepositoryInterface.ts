@@ -1,9 +1,9 @@
-import { Credential } from "../../Models/Credential";
+import { UserCredential } from "../../Models/UserCredential";
 import { RepositoryInterface } from "./RepositoryInterface";
 
 interface CredentialRepositoryInterface extends RepositoryInterface {
-    save(data: Credential): Promise<Credential>;
-    findOne(option: any): Promise<Credential | null>;
+    save(data: UserCredential): Promise<UserCredential>;
+    findOne(option: any): Promise<UserCredential | null>;
 };
 
 export type { CredentialRepositoryInterface };

@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { inject, injectable } from "inversify";
-import { Credential } from "../Models/Credential";
+import { UserCredential } from "../Models/UserCredential";
 import { TYPES } from "../../config/types";
 import { CredentialRepositoryInterface } from "../Repositories/Interfaces/CredentialRepositoryInterface";
 import { CredentialServiceInterface } from "./Interfaces/CredentialServiceInterface";
@@ -13,11 +13,11 @@ class CredentialService implements CredentialServiceInterface {
         this.credentialRepositoryInterface = credentialRepositoryInterface;
     }
     
-    findOne(option: any): Promise<Credential | null> {
+    findOne(option: any): Promise<UserCredential | null> {
         return this.credentialRepositoryInterface.findOne(option);
     }
 
-    save(data: Credential): Promise<Credential> {
+    save(data: UserCredential): Promise<UserCredential> {
         return this.credentialRepositoryInterface.save(data)
     }
 };

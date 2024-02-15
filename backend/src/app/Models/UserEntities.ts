@@ -1,12 +1,13 @@
 import { BaseEntity, Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, Timestamp } from "typeorm";
 import { UserProfile } from "./UserProfile";
+import { UserCredential } from "./UserCredential";
 
 @Entity()
 export class UserEntities extends BaseEntity {
     @PrimaryGeneratedColumn({ type: "int" })
     entity_id!: number;
 
-    @Column("json")
+    @Column({ type: "json", nullable: true })
     enity_user!: JSON;
 
     @Column({ type: "timestamp", default: () => 'NOW()' })
@@ -15,10 +16,13 @@ export class UserEntities extends BaseEntity {
     @Column({ type: "timestamp", default: () => 'NOW()' })
     update_at!: Timestamp;
 
-    @Column("bit") 
+    @Column({ type: "bit", default: true })
     is_active!: boolean;
 
-    @OneToOne(() => UserProfile, userProfile => userProfile.userEntities, { cascade: true })
+    @OneToOne(() => UserCredential, userCredential => userCredential.userEntities, { cascade: true })
+    userCredential!: UserCredential;
+
+    @OneToOne(() => UserProfile, userProfile => userProfile.userEntities)
     @JoinColumn() 
     userProfile!: UserProfile;
 };

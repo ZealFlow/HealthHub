@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Credential } from './../../../Models/Credential';
+import { UserEntities } from '../../../Models/UserEntities';
 import { UserProfile } from './../../../Models/UserProfile';
 import { injectable, inject } from 'inversify';
 import { Request, Response, request, response } from "express";
@@ -8,6 +8,8 @@ import { UserProfileServiceInterface } from '../../../Services/Interfaces/UserPr
 import bcrypt from 'bcrypt';
 import { CredentialServiceInterface } from '../../../Services/Interfaces/CredentialServiceInterface';
 import jwt from 'jsonwebtoken';
+import { UserCredential } from '../../../Models/UserCredential';
+import { UserEntitiesServiceInterface } from '../../../Services/Interfaces/UserEntitiesServiceInterface';
 // import fs from 'fs';
 
 // const privateKey = fs.readFileSync('/keys/private.key');
@@ -24,19 +26,25 @@ const encodedToken = (user_id: number) => {
 class RegisterController {
     protected userProfileServiceInterface: UserProfileServiceInterface;
     protected credentialServiceInterface: CredentialServiceInterface;
+    protected userEntitiesServiceInterface: UserEntitiesServiceInterface
     protected userProfileModel: UserProfile;
-    protected credentialModel: Credential;
+    protected userEntitiesModel: UserEntities;
+    protected credentialModel: UserCredential;
 
     constructor(
         @inject(TYPES.UserServiceInterface) userProfileServiceInterface: UserProfileServiceInterface,
         @inject(TYPES.CredentialServiceInterface) credentialServiceInterface: CredentialServiceInterface,
+        @inject(TYPES.UserEntitiesServiceInterface) userEntitiesServiceInterface: UserEntitiesServiceInterface,
         @inject(TYPES.UserProfile) userProfileModel: UserProfile,
-        @inject(TYPES.Credential) credentialModel: Credential
+        @inject(TYPES.UserEntities) userEntities: UserEntities,
+        @inject(TYPES.Credential) userCredential: UserCredential
     ) {
         this.userProfileServiceInterface = userProfileServiceInterface;
         this.credentialServiceInterface = credentialServiceInterface;
+        this.userEntitiesServiceInterface =  userEntitiesServiceInterface;
         this.userProfileModel = userProfileModel;
-        this.credentialModel = credentialModel;
+        this.credentialModel = userCredential;
+        this.userEntitiesModel = userEntities;
     }
 
     async index(req: Request, res: Response) {
@@ -50,15 +58,17 @@ class RegisterController {
         Object.assign(this.credentialModel, { ...credentialData, password_hash: hashPassword, password_salt: saltPassword });
 
 
-        this.userProfileModel.credential = this.credentialModel;
+        this.userEntitiesModel.userCredential = this.credentialModel;
+        this.userProfileModel.userEntities = this.userEntitiesModel;
 
         //save userProfile with credential
         await this.userProfileServiceInterface.save(this.userProfileModel);
+        await this.userEntitiesServiceInterface.save(this.userProfileModel.userEntities);
+        await this.credentialServiceInterface.save(this.userEntitiesModel.userCredential);
 
         //get token
         res.setHeader('Authorization', encodedToken(this.userProfileModel.user_id));
-
-        res.json({ message: 'User profile and credential saved successfully'});
+        res.status(200).json({ message: 'User registered successfully' });
     }
 }
 

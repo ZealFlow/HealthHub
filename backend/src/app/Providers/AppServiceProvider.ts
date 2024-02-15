@@ -1,5 +1,5 @@
-import { Credential } from './../Models/Credential';
 import "reflect-metadata";
+import { UserCredential } from '../Models/UserCredential';
 import { Container } from "inversify";
 import { TYPES } from "../../config/types";
 import { UserProfileService } from "../Services/UserProfileService";
@@ -11,7 +11,11 @@ import { CredentialRepositoryInterface } from '../Repositories/Interfaces/Creden
 import { CredentialRepository } from '../Repositories/CredentialRepository';
 import { CredentialService } from '../Services/CredentialService';
 import { CredentialServiceInterface } from '../Services/Interfaces/CredentialServiceInterface';
-import { Verification } from '../Http/Middleware/Verification';
+import { UserEntitiesRepositoryInterface } from "../Repositories/Interfaces/UserEntitiesRepositoryInterface";
+import { UserEntitiesRepository } from "../Repositories/UserEntitiesRepository";
+import { UserEntitiesServiceInterface } from "../Services/Interfaces/UserEntitiesServiceInterface";
+import { UserEntitiesService } from "../Services/UserEntitiesService";
+import { UserEntities } from "../Models/UserEntities";
 
 class AppServiceProvider {
     private container: Container;
@@ -28,8 +32,13 @@ class AppServiceProvider {
         this.container.bind<CredentialServiceInterface>(TYPES.CredentialServiceInterface).to(CredentialService);
         this.container.bind<CredentialRepositoryInterface>(TYPES.CredentialRepositoryInterface).to(CredentialRepository);
 
+
+        this.container.bind<UserEntitiesServiceInterface>(TYPES.UserEntitiesServiceInterface).to(UserEntitiesService);
+        this.container.bind<UserEntitiesRepositoryInterface>(TYPES.UserEntitiesRepositoryInterface).to(UserEntitiesRepository);
+
         this.container.bind(TYPES.UserProfile).toConstantValue(new UserProfile());
-        this.container.bind(TYPES.Credential).toConstantValue(new Credential());
+        this.container.bind(TYPES.Credential).toConstantValue(new UserCredential());
+        this.container.bind(TYPES.UserEntities).toConstantValue(new UserEntities());
     }
 
     public getContainer(): Container {
