@@ -6,26 +6,30 @@ export default function FormRegister() {
 
     function handleSubmit() {
         // Get the values from the form fields
-        const firstname = document.querySelector('input[name="firstname"]').value;
-        const lastname = document.querySelector('input[name="lastname"]').value;
-        const username = document.querySelector('input[name="username"]').value;
-        const identification = document.querySelector('input[name="identification"]').value;
-        const password = document.querySelector('input[name="password"]').value;
-        const dob = document.querySelector('input[name="dob"]').value;
-    
+        // const firstname: HTMLInputElement | null = document.querySelector('input[name="firstname"]').value;
+        // const lastname: HTMLInputElement | null = document.querySelector('input[name="lastname"]').value;
+        // const username: HTMLInputElement | null = document.querySelector('input[name="username"]').value;
+        // const identification: HTMLInputElement | null = document.querySelector('input[name="identification"]').value;
+        // const password: HTMLInputElement | null = document.querySelector('input[name="password"]').value;
+        // const dob: HTMLInputElement | null = document.querySelector('input[name="dob"]').value;
+        
+        // if (firstname !== null && lastname !== null && ) {
+        //     const username = usernameInput.value;
+        //     const password = passwordInput.value;
+        // }
         // Create an object with the form data
-        const formData = {
-            userProfileData: {
-                firstname,
-                lastname,
-                username,
-                email: identification
-            },
-            credentialData: {
-                password
-            },
-            dob
-        };
+        // const formData = {
+        //     userProfileData: {
+        //         firstname,
+        //         lastname,
+        //         username,
+        //         email: identification
+        //     },
+        //     credentialData: {
+        //         password
+        //     },
+        //     dob
+        // };
     
         // Send the form data to the server
         fetch('http://localhost:3001/auth/register', {
@@ -33,7 +37,7 @@ export default function FormRegister() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(formData)
+            // body: JSON.stringify(formData)
         })
             .then(response => {
                 if (response.ok) {
