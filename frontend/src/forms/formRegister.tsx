@@ -1,4 +1,5 @@
 'use client';
+
 import { useRouter } from 'next/navigation';
 
 export default function FormRegister() {
@@ -6,28 +7,37 @@ export default function FormRegister() {
 
     function handleSubmit() {
         // Get the values from the form fields
-        const firstname = document.querySelector('input[name="firstname"]').value;
-        const lastname = document.querySelector('input[name="lastname"]').value;
-        const username = document.querySelector('input[name="username"]').value;
-        const identification = document.querySelector('input[name="identification"]').value;
-        const password = document.querySelector('input[name="password"]').value;
-        const dob = document.querySelector('input[name="dob"]').value;
-    
+        const firstnameElement: HTMLInputElement | null = document.querySelector('input[name="firstname"]');
+        const lastnameElement: HTMLInputElement | null = document.querySelector('input[name="lastname"]');
+        const usernameElement: HTMLInputElement | null = document.querySelector('input[name="username"]');
+        const identificationElement: HTMLInputElement | null = document.querySelector('input[name="identification"]');
+        const passwordElement: HTMLInputElement | null = document.querySelector('input[name="password"]');
+        const dobElement: HTMLInputElement | null = document.querySelector('input[name="dob"]');
+        const genderElement: HTMLInputElement | null = document.querySelector('input[name="gender"]:checked');
+
+        const firstname = firstnameElement ? firstnameElement.value : '';
+        const lastname = lastnameElement ? lastnameElement.value : '';
+        const username = usernameElement ? usernameElement.value : '';
+        const identification = identificationElement ? identificationElement.value : '';
+        const password = passwordElement ? passwordElement.value : '';
+        const dob = dobElement ? dobElement.value : '';
+        const gender = genderElement ? genderElement.value : '';
+
         // Create an object with the form data
         const formData = {
             userProfileData: {
                 firstname,
                 lastname,
                 username,
-                email: identification
+                email: identification,
+                dateofbirth: dob,
+                gender
             },
             credentialData: {
                 password
-            },
-            dob
+            }
         };
-    
-        // Send the form data to the server
+
         fetch('http://localhost:3001/auth/register', {
             method: 'POST',
             headers: {
@@ -37,15 +47,17 @@ export default function FormRegister() {
         })
             .then(response => {
                 if (response.ok) {
-                    router.push('/');
+                    const token = response.headers.get('Authorization');
+                    console.log(token);
+                    router.push('/user/confirm-role');
+                } else {
+                    throw new Error('Network response was not ok');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
-    }
-    
-    
+    };
 
     return (
         <>
@@ -80,16 +92,22 @@ export default function FormRegister() {
                         <label>Giới tính</label>
                         <div className="form__body__gender__box flex justify-between w-full">
                             <div className="form__body__gender__type">
-                                <label>Nam</label>
-                                <input type="radio" />
+                                <label className='cursor-pointer'>
+                                    Nam
+                                    <input type="radio" name="gender" value='1'/>
+                                </label>
                             </div>
                             <div className="form__body__gender__type">
-                                <label>Nữ</label>
-                                <input type="radio" />
+                                <label className='cursor-pointer'>
+                                    Nữ
+                                    <input type="radio" name="gender" value='2'/>
+                                </label>
                             </div>
                             <div className="form__body__gender__type">
-                                <label>Khác</label>
-                                <input type="radio" />
+                                <label className='cursor-pointer'>
+                                    Khác
+                                    <input type="radio" name="gender" value='3'/>
+                                </label>
                             </div>
                         </div>
                     </div>

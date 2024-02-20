@@ -3,6 +3,16 @@ import { injectable, inject } from 'inversify';
 import { Request, Response} from "express";
 import { TYPES } from "../../../../config/types";
 import { UserProfileServiceInterface } from '../../../Services/Interfaces/UserProfileServiceInterface';
+import jwt from 'jsonwebtoken';
+
+const encodedToken = (user_id: any) => {
+    return jwt.sign({
+        iss: 'HealthHub',
+        sub: user_id,
+        ist: Math.floor(Date.now()),
+        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 3)
+    }, process.env.JWT_SECRET as string);
+}
 
 @injectable()
 class LoginController {
@@ -16,7 +26,10 @@ class LoginController {
     }
 
     async index(req: Request, res: Response) {
-        res.send('User login Successfully!');
+        const token = encodedToken(req.user);
+        // res.setHeader('Authorization', token);
+        // res.send(JSON.stringify({Authorization: token}));
+        return res.status(200).json({token: token});
     }
 }
 

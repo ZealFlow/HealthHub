@@ -20,6 +20,8 @@ const TYPES = {
     UserEntitiesRepository: Symbol.for("UserEntitiesRepository"),
     UserEntities: Symbol.for("UserEntities"),
 
+    RegisterController: Symbol("RegisterController"),
+
     //Module Verification
     Verification: Symbol.for("Verification"),
 };

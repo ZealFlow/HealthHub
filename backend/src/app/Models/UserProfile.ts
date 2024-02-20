@@ -3,6 +3,12 @@ import { UserEntities } from './UserEntities';
 import { Admin } from './Admin';
 import { EntitiesRole } from './EntitiesRole';
 
+export enum GenderUser {
+    male = 1,
+    female = 2,
+    other = 3
+};
+
 @Entity()
 export class UserProfile extends BaseEntity {
     @PrimaryGeneratedColumn({ type: "int" })
@@ -19,6 +25,12 @@ export class UserProfile extends BaseEntity {
 
     @Column("varchar", { length: 50, nullable: true })
     username!: string;
+
+    @Column({ type: "date" })
+    dateofbirth!: Date;
+
+    @Column({ type: "enum", enum: GenderUser })
+    gender!: GenderUser;
 
     @Column({ type: "timestamp", default: () => 'CURRENT_TIMESTAMP' })
     create_at!: Timestamp;

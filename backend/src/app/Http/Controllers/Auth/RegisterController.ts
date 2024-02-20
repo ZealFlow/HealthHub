@@ -38,7 +38,8 @@ class RegisterController {
         @inject(TYPES.UserProfile) userProfileModel: UserProfile,
         @inject(TYPES.UserEntities) userEntities: UserEntities,
         @inject(TYPES.Credential) userCredential: UserCredential
-    ) {
+    ) 
+    {
         this.userProfileServiceInterface = userProfileServiceInterface;
         this.credentialServiceInterface = credentialServiceInterface;
         this.userEntitiesServiceInterface =  userEntitiesServiceInterface;
@@ -70,7 +71,10 @@ class RegisterController {
         res.setHeader('Authorization', encodedToken(this.userProfileModel.user_id));
         res.status(200).json({ message: 'User registered successfully' });
     }
+
+    getUserProfile () {
+        return this.userProfileModel;
+    }
 }
 
 export { RegisterController };
-

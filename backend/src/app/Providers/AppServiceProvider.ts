@@ -16,6 +16,7 @@ import { UserEntitiesRepository } from "../Repositories/UserEntitiesRepository";
 import { UserEntitiesServiceInterface } from "../Services/Interfaces/UserEntitiesServiceInterface";
 import { UserEntitiesService } from "../Services/UserEntitiesService";
 import { UserEntities } from "../Models/UserEntities";
+import { RegisterController } from "../Http/Controllers/Auth/RegisterController";
 
 class AppServiceProvider {
     private container: Container;
@@ -39,6 +40,8 @@ class AppServiceProvider {
         this.container.bind(TYPES.UserProfile).toConstantValue(new UserProfile());
         this.container.bind(TYPES.Credential).toConstantValue(new UserCredential());
         this.container.bind(TYPES.UserEntities).toConstantValue(new UserEntities());
+
+        this.container.bind<RegisterController>(TYPES.RegisterController).to(RegisterController);
     }
 
     public getContainer(): Container {
