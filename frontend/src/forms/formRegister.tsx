@@ -1,4 +1,5 @@
 'use client';
+
 import { useRouter } from 'next/navigation';
 
 export default function FormRegister() {
@@ -35,21 +36,25 @@ export default function FormRegister() {
         fetch('http://localhost:3001/auth/register', {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json; charset=UTF-8",
             },
             // body: JSON.stringify(formData)
         })
             .then(response => {
                 if (response.ok) {
-                    router.push('/');
+                    response.json().then(data => {
+                        const token = data.token;
+                        sessionStorage.setItem('token', token);
+                        router.push('/user/confirm-role');
+                    });
+                } else {
+                    throw new Error('Network response was not ok');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
             });
-    }
-    
-    
+    };
 
     return (
         <>
@@ -84,16 +89,22 @@ export default function FormRegister() {
                         <label>Giới tính</label>
                         <div className="form__body__gender__box flex justify-between w-full">
                             <div className="form__body__gender__type">
-                                <label>Nam</label>
-                                <input type="radio" />
+                                <label className='cursor-pointer'>
+                                    Nam
+                                    <input type="radio" name="gender" value='1'/>
+                                </label>
                             </div>
                             <div className="form__body__gender__type">
-                                <label>Nữ</label>
-                                <input type="radio" />
+                                <label className='cursor-pointer'>
+                                    Nữ
+                                    <input type="radio" name="gender" value='2'/>
+                                </label>
                             </div>
                             <div className="form__body__gender__type">
-                                <label>Khác</label>
-                                <input type="radio" />
+                                <label className='cursor-pointer'>
+                                    Khác
+                                    <input type="radio" name="gender" value='3'/>
+                                </label>
                             </div>
                         </div>
                     </div>

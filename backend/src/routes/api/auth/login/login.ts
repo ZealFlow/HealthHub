@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { LoginController } from "../../../../app/Http/Controllers/Auth/LoginController";
 import AppServiceProvider from "../../../../app/Providers/AppServiceProvider";
-import passport, { session } from "passport";
+import passport from "passport";
 import { Authentication } from "../../../../app/Http/Middleware/Authentication";
 require('dotenv').config();
 

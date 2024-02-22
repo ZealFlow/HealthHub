@@ -1,6 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 export default function FormLogin() {
+    const router = useRouter();
 
     function handleLogin() {
         const usernameInput: HTMLInputElement | null = document.querySelector('input[name="username"]');
@@ -18,12 +21,19 @@ export default function FormLogin() {
             fetch('http://localhost:3001/auth/login', { 
                 method: 'POST',
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json; charset=UTF-8",
                 },
                 body: JSON.stringify(formData)
             })
                 .then(response => {
-                    if (response.ok) console.log('Success response');
+                    if (response.ok) {
+                        response.json().then(data => {
+                            const token = data.token;
+                            sessionStorage.setItem('token', token);
+                            // router.push('/user/confirm-role');
+                            router.push('/');
+                        });
+                    }
                 })
         }
     }

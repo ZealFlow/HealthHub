@@ -41,7 +41,7 @@ class RegisterController {
     ) {
         this.userProfileServiceInterface = userProfileServiceInterface;
         this.credentialServiceInterface = credentialServiceInterface;
-        this.userEntitiesServiceInterface =  userEntitiesServiceInterface;
+        this.userEntitiesServiceInterface = userEntitiesServiceInterface;
         this.userProfileModel = userProfileModel;
         this.credentialModel = userCredential;
         this.userEntitiesModel = userEntities;
@@ -67,10 +67,13 @@ class RegisterController {
         await this.credentialServiceInterface.save(this.userEntitiesModel.userCredential);
 
         //get token
-        res.setHeader('Authorization', encodedToken(this.userProfileModel.user_id));
-        res.status(200).json({ message: 'User registered successfully' });
+        const token = encodedToken(this.userProfileModel.user_id);
+        return res.status(200).json({ token: token });
+    }
+
+    getUserProfile() {
+        return this.userProfileModel;
     }
 }
 
 export { RegisterController };
-

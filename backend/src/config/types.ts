@@ -20,6 +20,22 @@ const TYPES = {
     UserEntitiesRepository: Symbol.for("UserEntitiesRepository"),
     UserEntities: Symbol.for("UserEntities"),
 
+    //Model EntitiesRole
+    EntitiesRoleRepositoryInterface: Symbol.for("EntitiesRoleRepositoryInterface"),
+    EntitiesRoleServiceInterface: Symbol.for("EntitiesRoleServiceInterface"),
+    EntitiesRoleService: Symbol.for("EntitiesRoleService"),
+    EntitiesRoleRepository: Symbol.for("EntitiesRoleRepository"),
+    EntitiesRole: Symbol.for("EntitiesRole"),
+
+    //Model Role
+    RoleRepositoryInterface: Symbol.for("RoleRepositoryInterface"),
+    RoleServiceInterface: Symbol.for("RoleServiceInterface"),
+    RoleService: Symbol.for("RoleService"),
+    RoleRepository: Symbol.for("RoleRepository"),
+    Role: Symbol.for("Role"),
+
+    RegisterController: Symbol("RegisterController"),
+
     //Module Verification
     Verification: Symbol.for("Verification"),
 };

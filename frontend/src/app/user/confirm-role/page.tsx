@@ -2,14 +2,46 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
 
-export default function ConfirmRole () {
+export default function ConfirmRole() {
     const router = useRouter();
     const [role, setRole] = useState<string | null>(null);
 
-    function handleRedirect () {
+    // useEffect(() => {
+    //     const token = sessionStorage.getItem('token');
+    //     if (!token) {
+    //         router.push('/login');
+    //         return;
+    //     }
+
+    //     fetch('http://localhost:3001/auth/verifyrole', {
+    //         method: 'POST',
+    //         headers: {
+    //             "Content-Type": "application/json; charset=UTF-8",
+    //             'Authorization': `Bearer ${token}`
+    //         },
+    //         body: JSON.stringify({role: role})
+    //     });
+    // }, [role]);
+
+    function handleRedirect() {
+        const token = sessionStorage.getItem('token');
+        if (!token) {
+            router.push('/login');
+            return;
+        }
+
+        fetch('http://localhost:3001/auth/verifyrole', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({role: role})
+        });
+
         switch (role) {
             case "customer":
                 router.push('/');
@@ -20,7 +52,7 @@ export default function ConfirmRole () {
             default:
                 alert("Bạn vui lòng xác nhận vai trò của tài khoản, bạn muốn tạo ?");
         }
-    }
+    };
 
     return (
         <>
@@ -33,12 +65,12 @@ export default function ConfirmRole () {
                                 <h2>Bạn đăng ký dưới quyền người dùng nào ?</h2>
                             </div>
                             <div className='selectOption__content grid grid-flow-col'>
-                                <div onClick={() => {setRole("customer")}} className="box-option-user w-35 h-20 flex flex-col items-center flex justify-center cursor-pointer">
-                                    <FontAwesomeIcon icon={faUsers} className='awesome-icon'/>
+                                <div onClick={() => { setRole("customer") }} className="box-option-user w-35 h-20 flex flex-col items-center flex justify-center cursor-pointer">
+                                    <FontAwesomeIcon icon={faUsers} className='awesome-icon' />
                                     <span>Người dùng</span>
                                 </div>
-                                <div onClick={() => {setRole("doctor")}} className="box-option-user w-35 h-20 flex flex-col items-center flex justify-center cursor-pointer">
-                                    <FontAwesomeIcon icon={faUserDoctor} className='awesome-icon'/>
+                                <div onClick={() => { setRole("doctor") }} className="box-option-user w-35 h-20 flex flex-col items-center flex justify-center cursor-pointer">
+                                    <FontAwesomeIcon icon={faUserDoctor} className='awesome-icon' />
                                     <span>Bác sĩ</span>
                                 </div>
                             </div>

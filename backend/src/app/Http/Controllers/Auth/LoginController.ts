@@ -1,22 +1,36 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'inversify';
-import { Request, Response} from "express";
+import { Request, Response } from "express";
 import { TYPES } from "../../../../config/types";
 import { UserProfileServiceInterface } from '../../../Services/Interfaces/UserProfileServiceInterface';
+import jwt from 'jsonwebtoken';
+
+const encodedToken = (user_id: number) => {
+    return jwt.sign({
+        iss: 'HealthHub',
+        sub: user_id,
+        ist: Math.floor(Date.now()),
+        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 3)
+    }, process.env.JWT_SECRET as string);
+}
 
 @injectable()
 class LoginController {
     protected userProfileServiceInterface: UserProfileServiceInterface;
 
-    constructor (
+    constructor(
         @inject(TYPES.UserServiceInterface) userProfileServiceInterface: UserProfileServiceInterface
-    ) 
-    {
+    ) {
         this.userProfileServiceInterface = userProfileServiceInterface;
     }
 
     async index(req: Request, res: Response) {
-        res.send('User login Successfully!');
+        const token = encodedToken(Number(req.user));
+        console.log('Token: ' + token);
+        console.log("Login: " + req.user);
+        // res.setHeader('Authorization', token);
+        // res.send(JSON.stringify({Authorization: token}));
+        return res.status(200).json({ token: token });
     }
 }
 

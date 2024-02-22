@@ -16,6 +16,17 @@ import { UserEntitiesRepository } from "../Repositories/UserEntitiesRepository";
 import { UserEntitiesServiceInterface } from "../Services/Interfaces/UserEntitiesServiceInterface";
 import { UserEntitiesService } from "../Services/UserEntitiesService";
 import { UserEntities } from "../Models/UserEntities";
+import { RegisterController } from "../Http/Controllers/Auth/RegisterController";
+import { EntitiesRoleServiceInterface } from "../Services/Interfaces/EntitiesRoleServiceInterface";
+import { EntitiesRoleService } from "../Services/EntitiesRoleService";
+import { EntitiesRoleRepositoryInterface } from "../Repositories/Interfaces/EntitiesRoleRepositoryInterface";
+import { EntitiesRoleRepository } from "../Repositories/EntitiesRoleRepository";
+import { EntitiesRole } from "../Models/EntitiesRole";
+import { RoleService } from "../Services/RoleService";
+import { RoleServiceInterface } from "../Services/Interfaces/RoleServiceInterface";
+import { RoleRepositoryInterface } from "../Repositories/Interfaces/RoleRepositoryInterface";
+import { RoleRepository } from "../Repositories/RoleRepository";
+import { Role } from "../Models/Role";
 
 class AppServiceProvider {
     private container: Container;
@@ -36,9 +47,19 @@ class AppServiceProvider {
         this.container.bind<UserEntitiesServiceInterface>(TYPES.UserEntitiesServiceInterface).to(UserEntitiesService);
         this.container.bind<UserEntitiesRepositoryInterface>(TYPES.UserEntitiesRepositoryInterface).to(UserEntitiesRepository);
 
+        this.container.bind<EntitiesRoleServiceInterface>(TYPES.EntitiesRoleServiceInterface).to(EntitiesRoleService);
+        this.container.bind<EntitiesRoleRepositoryInterface>(TYPES.EntitiesRoleRepositoryInterface).to(EntitiesRoleRepository);
+
+        this.container.bind<RoleServiceInterface>(TYPES.RoleServiceInterface).to(RoleService);
+        this.container.bind<RoleRepositoryInterface>(TYPES.RoleRepositoryInterface).to(RoleRepository);
+
         this.container.bind(TYPES.UserProfile).toConstantValue(new UserProfile());
         this.container.bind(TYPES.Credential).toConstantValue(new UserCredential());
         this.container.bind(TYPES.UserEntities).toConstantValue(new UserEntities());
+        this.container.bind(TYPES.EntitiesRole).toConstantValue(new EntitiesRole());
+        this.container.bind(TYPES.Role).toConstantValue(new Role());
+
+        this.container.bind<RegisterController>(TYPES.RegisterController).to(RegisterController);
     }
 
     public getContainer(): Container {
