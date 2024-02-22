@@ -4,40 +4,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie';
 
 export default function ConfirmRole() {
     const router = useRouter();
     const [role, setRole] = useState<string | null>(null);
-
-    // useEffect(() => {
-    //     const token = sessionStorage.getItem('token');
-    //     if (!token) {
-    //         router.push('/login');
-    //         return;
-    //     }
-
-    //     fetch('http://localhost:3001/auth/verifyrole', {
-    //         method: 'POST',
-    //         headers: {
-    //             "Content-Type": "application/json; charset=UTF-8",
-    //             'Authorization': `Bearer ${token}`
-    //         },
-    //         body: JSON.stringify({role: role})
-    //     });
-    // }, [role]);
-
-    function handleRedirect() {
-        const token = sessionStorage.getItem('token');
-        if (!token) {
-            router.push('/login');
+    
+    useEffect(() => {
+        const accessToken = Cookies.get('access_token');
+        if (!accessToken) {
+            router.push('/user/login');
             return;
         }
+    }, []);
+
+    function handleRedirect() {
+        const accessToken = Cookies.get('access_token');
 
         fetch('http://localhost:3001/auth/verifyrole', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
-                'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify({role: role})
         });

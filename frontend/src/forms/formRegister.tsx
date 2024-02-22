@@ -1,36 +1,46 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+import { useSession } from "next-auth/react"
 
 export default function FormRegister() {
+    const { data: session } = useSession();
+
     const router = useRouter();
 
     function handleSubmit() {
         // Get the values from the form fields
-        // const firstname: HTMLInputElement | null = document.querySelector('input[name="firstname"]').value;
-        // const lastname: HTMLInputElement | null = document.querySelector('input[name="lastname"]').value;
-        // const username: HTMLInputElement | null = document.querySelector('input[name="username"]').value;
-        // const identification: HTMLInputElement | null = document.querySelector('input[name="identification"]').value;
-        // const password: HTMLInputElement | null = document.querySelector('input[name="password"]').value;
-        // const dob: HTMLInputElement | null = document.querySelector('input[name="dob"]').value;
-        
-        // if (firstname !== null && lastname !== null && ) {
-        //     const username = usernameInput.value;
-        //     const password = passwordInput.value;
-        // }
+        const firstnameElement: HTMLInputElement | null = document.querySelector('input[name="firstname"]');
+        const lastnameElement: HTMLInputElement | null = document.querySelector('input[name="lastname"]');
+        const usernameElement: HTMLInputElement | null = document.querySelector('input[name="username"]');
+        const identificationElement: HTMLInputElement | null = document.querySelector('input[name="identification"]');
+        const passwordElement: HTMLInputElement | null = document.querySelector('input[name="password"]');
+        const dobElement: HTMLInputElement | null = document.querySelector('input[name="dob"]');
+        const genderElement: HTMLInputElement | null = document.querySelector('input[name="gender"]:checked');
+
+        const firstname = firstnameElement ? firstnameElement.value : '';
+        const lastname = lastnameElement ? lastnameElement.value : '';
+        const username = usernameElement ? usernameElement.value : '';
+        const identification = identificationElement ? identificationElement.value : '';
+        const password = passwordElement ? passwordElement.value : '';
+        const dob = dobElement ? dobElement.value : '';
+        const gender = genderElement ? genderElement.value : '';
+
         // Create an object with the form data
-        // const formData = {
-        //     userProfileData: {
-        //         firstname,
-        //         lastname,
-        //         username,
-        //         email: identification
-        //     },
-        //     credentialData: {
-        //         password
-        //     },
-        //     dob
-        // };
+        const formData = {
+            userProfileData: {
+                firstname,
+                lastname,
+                username,
+                email: identification,
+                dateofbirth: dob,
+                gender
+            },
+            credentialData: {
+                password
+            }
+        };
     
         // Send the form data to the server
         fetch('http://localhost:3001/auth/register', {
@@ -38,17 +48,16 @@ export default function FormRegister() {
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
             },
-            // body: JSON.stringify(formData)
+            body: JSON.stringify(formData)
         })
             .then(response => {
                 if (response.ok) {
                     response.json().then(data => {
                         const token = data.token;
-                        sessionStorage.setItem('token', token);
+                        Cookies.set('access_token', token);
+                        session?.expires
                         router.push('/user/confirm-role');
                     });
-                } else {
-                    throw new Error('Network response was not ok');
                 }
             })
             .catch(error => {
