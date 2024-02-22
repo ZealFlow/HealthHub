@@ -41,15 +41,17 @@ export default function FormRegister() {
         fetch('http://localhost:3001/auth/register', {
             method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json; charset=UTF-8",
             },
             body: JSON.stringify(formData)
         })
             .then(response => {
                 if (response.ok) {
-                    const token = response.headers.get('Authorization');
-                    console.log(token);
-                    router.push('/user/confirm-role');
+                    response.json().then(data => {
+                        const token = data.token;
+                        sessionStorage.setItem('token', token);
+                        router.push('/user/confirm-role');
+                    });
                 } else {
                     throw new Error('Network response was not ok');
                 }

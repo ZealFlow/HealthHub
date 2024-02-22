@@ -29,13 +29,10 @@ export default function FormLogin() {
                     if (response.ok) {
                         response.json().then(data => {
                             const token = data.token;
-                            console.log(token);
                             sessionStorage.setItem('token', token);
-                            router.push('/user/confirm-role');
+                            // router.push('/user/confirm-role');
+                            router.push('/');
                         });
-
-                        // router.push('/');
-                        router.push('/user/confirm-role');
                     }
                 })
         }

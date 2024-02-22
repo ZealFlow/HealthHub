@@ -9,38 +9,39 @@ export default function ConfirmRole() {
     const router = useRouter();
     const [role, setRole] = useState<string | null>(null);
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     const token = sessionStorage.getItem('token');
+    //     if (!token) {
+    //         router.push('/login');
+    //         return;
+    //     }
+
+    //     fetch('http://localhost:3001/auth/verifyrole', {
+    //         method: 'POST',
+    //         headers: {
+    //             "Content-Type": "application/json; charset=UTF-8",
+    //             'Authorization': `Bearer ${token}`
+    //         },
+    //         body: JSON.stringify({role: role})
+    //     });
+    // }, [role]);
+
+    function handleRedirect() {
         const token = sessionStorage.getItem('token');
         if (!token) {
-            router.push('/login'); // Redirect to login if token is not found
+            router.push('/login');
             return;
         }
 
         fetch('http://localhost:3001/auth/verifyrole', {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 "Content-Type": "application/json; charset=UTF-8",
                 'Authorization': `Bearer ${token}`
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Lỗi khi gọi API xác thực vai trò');
-                }
-            })
-            .then(data => {
-                console.log('Phản hồi từ API xác thực vai trò:', data);
-                // Set role based on response data
-                setRole(data.role);
-            })
-            .catch(error => {
-                console.error('Lỗi khi gọi API xác thực vai trò:', error);
-            });
-    }, []);
+            },
+            body: JSON.stringify({role: role})
+        });
 
-    function handleRedirect() {
         switch (role) {
             case "customer":
                 router.push('/');
@@ -51,7 +52,7 @@ export default function ConfirmRole() {
             default:
                 alert("Bạn vui lòng xác nhận vai trò của tài khoản, bạn muốn tạo ?");
         }
-    }
+    };
 
     return (
         <>

@@ -17,7 +17,10 @@ class VerifyRoleRoutes {
     }
 
     intializeRoutes() {
-        this.router.get("/verifyrole", passport.authenticate('jwt', { session: false }), this.confirmRoleController.index.bind(this.confirmRoleController));
+        const boundIndex = this.confirmRoleController.index.bind(this.confirmRoleController);
+
+        this.router.get("/verifyrole", passport.authenticate('jwt', { session: false }), boundIndex);
+        this.router.post("/verifyrole", passport.authenticate('jwt', { session: false }), boundIndex);
     }
 }
 

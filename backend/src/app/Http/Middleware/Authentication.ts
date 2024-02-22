@@ -33,10 +33,10 @@ export class Authentication {
             secretOrKey: process.env.JWT_SECRET as string,
         }, async (payload, done) => {
             try {
-                const UserEntities = await this.userProfileServiceInterface.findOne({ user_id: payload.sub.user_id });
+                const UserEntities = await this.userProfileServiceInterface.findOne({ user_id: payload.sub });
                 console.log(UserEntities);
                 if (!UserEntities) done(error, false);
-                done(null, UserEntities);
+                done(null, UserEntities?.user_id);
             } catch (error) {
                 done(error, false);
             }
@@ -50,10 +50,11 @@ export class Authentication {
 
                 const userprofile = await this.userProfileServiceInterface.findOne({ username });
                 if (!userprofile) return done(null, false);
+                console.log(userprofile);
                 const isUserCorrect = await this.verification.verifiespassword(username, password);
 
                 if (!isUserCorrect) return done(null, false, { message: 'Uncorrect username or password' });
-                done(null, userprofile);
+                done(null, userprofile.user_id);
             } catch (error) {
                 done(error, false);
             }
