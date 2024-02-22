@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 export default function FormLogin() {
     const router = useRouter();
@@ -29,8 +30,8 @@ export default function FormLogin() {
                     if (response.ok) {
                         response.json().then(data => {
                             const token = data.token;
-                            sessionStorage.setItem('token', token);
-                            // router.push('/user/confirm-role');
+                            //Save session
+                            Cookies.set('access_token', token);
                             router.push('/');
                         });
                     }
