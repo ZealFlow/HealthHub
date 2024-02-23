@@ -2,9 +2,14 @@
 
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { useAppDispatch, useAppSelector } from '../../lib/redux/store';
+import { loginSuccess, logout } from '../../lib/redux/authSlice';
 
 export default function FormLogin() {
     const router = useRouter();
+    const dispatch = useAppDispatch();
+    const loggedIn = useAppSelector(state => state.auth.loggedIn);
+    
 
     function handleLogin() {
         const usernameInput: HTMLInputElement | null = document.querySelector('input[name="username"]');
@@ -32,6 +37,7 @@ export default function FormLogin() {
                             const token = data.token;
                             //Save session
                             Cookies.set('access_token', token);
+                            dispatch(loginSuccess());
                             router.push('/');
                         });
                     }
