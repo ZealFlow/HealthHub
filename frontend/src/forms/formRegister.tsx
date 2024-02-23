@@ -2,10 +2,8 @@
 
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { useSession } from "next-auth/react"
 
 export default function FormRegister() {
-    const { data: session } = useSession();
 
     const router = useRouter();
 
@@ -55,7 +53,6 @@ export default function FormRegister() {
                     response.json().then(data => {
                         const token = data.token;
                         Cookies.set('access_token', token);
-                        session?.expires
                         router.push('/user/confirm-role');
                     });
                 }

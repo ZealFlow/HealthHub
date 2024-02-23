@@ -3,12 +3,13 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faUserDoctor } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
 export default function ConfirmRole() {
     const router = useRouter();
     const [role, setRole] = useState<string | null>(null);
+    const [loading, setLoading] = useState(true);
     
     useEffect(() => {
         const accessToken = Cookies.get('access_token');
@@ -41,6 +42,10 @@ export default function ConfirmRole() {
                 alert("Bạn vui lòng xác nhận vai trò của tài khoản, bạn muốn tạo ?");
         }
     };
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
