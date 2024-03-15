@@ -15,6 +15,6 @@ class UserController {
     async index (req: Request, res: Response) {
         return res.json(await this.userProfileServiceInterface.getAll());
     }
-}
+};
 
 export { UserController };

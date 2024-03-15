@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Timestamp, OneToOne, JoinColumn, ManyToMany, JoinTable, OneToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, Timestamp, OneToOne, OneToMany } from 'typeorm';
 import { UserEntities } from './UserEntities';
-import { Admin } from './Admin';
 import { EntitiesRole } from './EntitiesRole';
 
 export enum GenderUser {
@@ -32,6 +31,33 @@ export class UserProfile extends BaseEntity {
     @Column({ type: "enum", enum: GenderUser })
     gender!: GenderUser;
 
+    @Column("varchar", { length: 150 })
+    phone!: string;
+
+    @Column("varchar", { length: 150 })
+    indentifyCode!: string;
+
+    @Column("varchar", { length: 150 })
+    country!: string;
+
+    @Column("varchar", { length: 150 })
+    ethnic!: string;
+
+    @Column("varchar", { length: 150 })
+    province!: string;
+
+    @Column("varchar", { length: 150 })
+    district!: string;
+
+    @Column("varchar", { length: 150 })
+    commune!: string;
+
+    @Column("varchar", { length: 150 })
+    residence_address!: string;
+
+    @Column("varchar", { length: 150 })
+    permanent_Address!: string
+
     @Column({ type: "timestamp", default: () => 'CURRENT_TIMESTAMP' })
     create_at!: Timestamp;
 
@@ -41,12 +67,9 @@ export class UserProfile extends BaseEntity {
     @Column({ type: "bit", default: true })
     is_active!: boolean;
 
-    @OneToOne(() => Admin, admin => admin.userProfile)
-    admin!: Admin;
-
     @OneToOne(() => UserEntities, userEntities => userEntities.userProfile, { cascade: true })
     userEntities!: UserEntities;
 
-    @OneToMany(() => EntitiesRole, entitiesRole => entitiesRole.userProfile)
+    @OneToMany(() => EntitiesRole, entitiesRole => entitiesRole.userProfile, { cascade: true })
     entitiesRole!: EntitiesRole[];
 };

@@ -26,3 +26,4 @@ export class UserEntities extends BaseEntity {
     @JoinColumn() 
     userProfile!: UserProfile;
 };
+ 

@@ -27,6 +27,31 @@ import { RoleServiceInterface } from "../Services/Interfaces/RoleServiceInterfac
 import { RoleRepositoryInterface } from "../Repositories/Interfaces/RoleRepositoryInterface";
 import { RoleRepository } from "../Repositories/RoleRepository";
 import { Role } from "../Models/Role";
+import { ScheduleServiceInterface } from "../Services/Interfaces/ScheduleServiceInterface";
+import { ScheduleRepositoryInterface } from "../Repositories/Interfaces/ScheduleRepositoryInterface";
+import { ScheduleRepository } from "../Repositories/ScheduleRepository";
+import { ScheduleService } from "../Services/ScheduleService";
+import { Schedule } from "../Models/Schedule";
+import { TimeSlot } from "../Models/TimeSlot";
+import { TimeSlotServiceInterface } from "../Services/Interfaces/TimeSlotServiceInterface";
+import { TimeSlotService } from "../Services/TimeSlotService";
+import { TimeSlotRepository } from "../Repositories/TimeSlotRepository";
+import { TimeSlotRepositoryInterface } from "../Repositories/Interfaces/TimeSlotRepositoryInterface";
+import { CheckupServiceInterface } from "../Services/Interfaces/CheckupServiceInterface";
+import { CheckupRepositoryInterface } from "../Repositories/Interfaces/CheckupRepositoryInterface";
+import { CheckupRepository } from "../Repositories/CheckupRepository";
+import { CheckupService } from "../Services/CheckupService";
+import Checkup from "../Models/Checkup";
+import { AppointmentService } from "../Services/AppointmentService";
+import { AppointmentRepository } from "../Repositories/AppointmentRepository";
+import { AppointmentServiceInterface } from "../Services/Interfaces/AppointmentServiceInterface";
+import { AppointmentRepositoryInterface } from "../Repositories/Interfaces/AppointmentRepositoryInterface";
+import { Appointment } from "../Models/Appointment";
+import { CustomerServiceInterface } from "../Services/Interfaces/CustomerServiceInterface";
+import { CustomerRepositoryInterface } from "../Repositories/Interfaces/CustomerRepositoryInterface";
+import { CustomerRepository } from "../Repositories/CustomerRepository";
+import { CustomerService } from "../Services/CustomerService";
+import { Customer } from "../Models/Customer";
 
 class AppServiceProvider {
     private container: Container;
@@ -43,7 +68,6 @@ class AppServiceProvider {
         this.container.bind<CredentialServiceInterface>(TYPES.CredentialServiceInterface).to(CredentialService);
         this.container.bind<CredentialRepositoryInterface>(TYPES.CredentialRepositoryInterface).to(CredentialRepository);
 
-
         this.container.bind<UserEntitiesServiceInterface>(TYPES.UserEntitiesServiceInterface).to(UserEntitiesService);
         this.container.bind<UserEntitiesRepositoryInterface>(TYPES.UserEntitiesRepositoryInterface).to(UserEntitiesRepository);
 
@@ -53,11 +77,31 @@ class AppServiceProvider {
         this.container.bind<RoleServiceInterface>(TYPES.RoleServiceInterface).to(RoleService);
         this.container.bind<RoleRepositoryInterface>(TYPES.RoleRepositoryInterface).to(RoleRepository);
 
+        this.container.bind<ScheduleServiceInterface>(TYPES.ScheduleServiceInterface).to(ScheduleService);
+        this.container.bind<ScheduleRepositoryInterface>(TYPES.ScheduleRepositoryInterface).to(ScheduleRepository);
+
+        this.container.bind<TimeSlotServiceInterface>(TYPES.TimeSlotServiceInterface).to(TimeSlotService);
+        this.container.bind<TimeSlotRepositoryInterface>(TYPES.TimeSlotRepositoryInterface).to(TimeSlotRepository);
+
+        this.container.bind<CheckupServiceInterface>(TYPES.CheckupServiceInterface).to(CheckupService);
+        this.container.bind<CheckupRepositoryInterface>(TYPES.CheckupRepositoryInterface).to(CheckupRepository);
+
+        this.container.bind<AppointmentServiceInterface>(TYPES.AppointmentServiceInterface).to(AppointmentService);
+        this.container.bind<AppointmentRepositoryInterface>(TYPES.AppointmentRepositoryInterface).to(AppointmentRepository);
+
+        this.container.bind<CustomerServiceInterface>(TYPES.CustomerServiceInterface).to(CustomerService);
+        this.container.bind<CustomerRepositoryInterface>(TYPES.CustomerRepositoryInterface).to(CustomerRepository);
+
+        this.container.bind(TYPES.Customer).toConstantValue(new Customer());
+        this.container.bind(TYPES.Appointment).toConstantValue(new Appointment());
         this.container.bind(TYPES.UserProfile).toConstantValue(new UserProfile());
         this.container.bind(TYPES.Credential).toConstantValue(new UserCredential());
         this.container.bind(TYPES.UserEntities).toConstantValue(new UserEntities());
         this.container.bind(TYPES.EntitiesRole).toConstantValue(new EntitiesRole());
         this.container.bind(TYPES.Role).toConstantValue(new Role());
+        this.container.bind(TYPES.Schedule).toConstantValue(new Schedule());
+        this.container.bind(TYPES.TimeSlot).toConstantValue(new TimeSlot());
+        this.container.bind(TYPES.Checkup).toConstantValue(new Checkup());
 
         this.container.bind<RegisterController>(TYPES.RegisterController).to(RegisterController);
     }

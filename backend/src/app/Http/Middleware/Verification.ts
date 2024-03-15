@@ -11,7 +11,7 @@ export class Verification {
 
     constructor(
         @inject(TYPES.UserServiceInterface) userProfileServiceInterface: UserProfileServiceInterface,
-        @inject(TYPES.CredentialServiceInterface) credentialServiceInterface: CredentialServiceInterface
+        @inject(TYPES.CredentialServiceInterface) credentialServiceInterface: CredentialServiceInterface,
     ) {
         this.userProfileServiceInterface = userProfileServiceInterface;
         this.credentialServiceInterface = credentialServiceInterface;

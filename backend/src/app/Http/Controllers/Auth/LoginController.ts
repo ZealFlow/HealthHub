@@ -26,13 +26,8 @@ class LoginController {
 
     async index(req: Request, res: Response) {
         const token = encodedToken(Number(req.user));
-        console.log('Token: ' + token);
-        console.log("Login: " + req.user);
-        // res.setHeader('Authorization', token);
-        // res.send(JSON.stringify({Authorization: token}));
-        return res.status(200).json({ token: token });
+        return res.status(200).json({ token: token, role: req.user });
     }
 }
 
 export { LoginController };
-

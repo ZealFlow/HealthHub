@@ -16,10 +16,11 @@ export class EntitiesRole extends BaseEntity {
     @Column({ type: "bit", default: true })
     is_active!: boolean;
 
-    @ManyToOne(() => UserProfile, userProfile => userProfile.entitiesRole)
+    @ManyToOne(() => UserProfile)
+    @JoinColumn({ name: "user_id" })
     userProfile!: UserProfile;
 
-    @ManyToOne(() => Role, role => role.entitiesRole)
+    @ManyToOne(() => Role)
+    @JoinColumn({ name: "role_id" })
     role!: Role;
-
 };
